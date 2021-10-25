@@ -1,0 +1,26 @@
+{
+  "name": "http-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheFuseGamer/node-web-server.git"
+  },
+  "keywords": [
+    "node",
+    "web",
+    "server",
+    "http"
+  ],
+  "author": "Amir Halloul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheFuseGamer/node-web-server/issues"
+  },
+  "homepage": "https://github.com/TheFuseGamer/node-web-server#readme"
+}
