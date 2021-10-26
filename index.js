@@ -38,19 +38,33 @@ const cars = [
 const server = http.createServer((req, res) => {
     const urlParts = req.url.split('/');
     if (urlParts[1] === 'cars') {
-        if (urlParts.length === 2) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(cars));
-        } else if (urlParts.length === 3) {
-            const carId = parseInt(urlParts[2]);
-            const car = cars.find(car => car.id === carId);
-            if (car) {
+        if (req.method === 'GET') {
+            if (urlParts.length === 2) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify(car));
-            } else {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
-                res.end('Car not found');
+                res.end(JSON.stringify(cars));
+            } else if (urlParts.length === 3) {
+                const carId = parseInt(urlParts[2]);
+                const car = cars.find(car => car.id === carId);
+                if (car) {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify(car));
+                } else {
+                    res.writeHead(404, { 'Content-Type': 'text/plain' });
+                    res.end('Car not found');
+                }
             }
+        } else if(req.method === 'POST') {
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk;
+            });
+            req.on('end', () => {
+                const car = JSON.parse(body);
+                car.id = cars.length;
+                cars.push(car);
+                res.writeHead(201, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(car));
+            });
         }
     } else  { 
         res.statusCode = 404;
